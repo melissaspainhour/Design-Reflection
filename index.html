@@ -7,7 +7,7 @@
   <link rel="stylesheet" href="styles.css" />
   <meta name="color-scheme" content="light only">
 </head>
-<body onload="setupPoster()">
+<body>
   <div class="app">
     <aside class="sidebar">
       <div class="brand">
@@ -15,14 +15,10 @@
         <div class="title">Ravenscroft</div>
       </div>
       <nav class="nav">
-        <a href="index.html">Home</a>
+        <a href="index.html" class="active">Home</a>
         <a href="superpower.html">Design Superpower</a>
         <a href="kryptonite.html">Design Kryptonite</a>
       </nav>
-      <p class="card" style="margin-top:12px;">
-        <strong>How to use:</strong><br>
-        Use the file picker below to add the graphics from your PDF (export pages as images or add the PDF). They will display on the home page.
-      </p>
     </aside>
 
     <main class="content">
@@ -30,13 +26,11 @@
       <span class="badge">Front Page</span>
 
       <section class="poster" style="margin-top:16px;">
-        <div class="speech">
-          Drop in the graphics from your PDF here 👇 (PNG/JPG or a PDF). This stays on this device only.
+        <div class="speech" style="margin-bottom:14px;">
+          Here’s the Ravenscroft Design Process — use it as a guide for your Superpower and Kryptonite reflections.
         </div>
-        <div class="drop">
-          <label for="posterInput"><strong>Add images or a PDF</strong></label><br>
-          <input id="posterInput" type="file" multiple accept="image/*,application/pdf" />
-          <div class="preview-grid" id="posterGrid" aria-live="polite" style="margin-top:12px;"></div>
+        <div class="card" style="text-align:center;">
+          <img src="tdm-design-process.png" alt="TDM Design Process graphic" style="max-width:100%; height:auto; border:4px solid #000; border-radius:12px;" />
         </div>
       </section>
 
