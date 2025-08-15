@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Design Kryptonite</title>
+  <link rel="stylesheet" href="styles.css" />
+</head>
+<body>
+  <div class="app">
+    <aside class="sidebar">
+      <div class="brand"><div class="logo">R</div><div class="title">Ravenscroft</div></div>
+      <nav class="nav">
+        <a href="index.html">Home</a>
+        <a href="superpower.html">Design Superpower</a>
+        <a href="kryptonite.html">Design Kryptonite</a>
+      </nav>
+    </aside>
+    <main class="content">
+      <h1 class="h1">Design Kryptonite</h1>
+      <form id="replyForm" class="form card">
+        <label>Name (optional)<br><input type="text" name="name"></label><br>
+        <label>Design process (optional)<br>
+          <select name="process">
+            <option value="">— Select one —</option>
+            <option>Empathize</option><option>Define</option><option>Ideate</option>
+            <option>Prototype</option><option>Test</option><option>Research</option>
+            <option>Iteration</option><option>Other</option>
+          </select>
+        </label><br>
+        <label>Your reply<br><textarea name="text" maxlength="500" required></textarea></label><br>
+        <button type="submit">Submit</button>
+      </form>
+      <div id="repliesList" style="margin-top:20px;"></div>
+    </main>
+  </div>
+  <script src="script.js"></script>
+  <script>
+    initReplies('kryptoniteReplies');
+  </script>
+</body>
+</html>
