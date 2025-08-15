@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Ravenscroft Design Process Reflection</title>
+  <link href="https://fonts.googleapis.com/css2?family=Bangers&family=Comic+Neue:wght@400;700&display=swap" rel="stylesheet">
+  <style>
+    body { margin:0; font-family:'Comic Neue', cursive; background: #fefefe; }
+    .app { display: flex; min-height: 100vh; }
+    .sidebar { background: #ffeb3b; padding: 20px; border-right: 6px solid #000; box-shadow: 6px 0 0 #000; width: 260px; }
+    .brand { display: flex; align-items: center; gap: 10px; margin-bottom: 20px; }
+    .logo { background: #2196f3; color:#fff; border: 4px solid #000; border-radius: 50%; width: 42px; height: 42px; display:flex; align-items:center; justify-content:center; font-family:'Bangers', cursive; font-size: 22px; }
+    .title { font-family: 'Bangers', cursive; font-size: 26px; }
+    .nav { display: flex; flex-direction: column; gap: 12px; }
+    .nav a { background: #fff176; border: 3px solid #000; border-radius: 8px; padding: 10px; font-weight: bold; text-decoration: none; color: #000; box-shadow: 4px 4px 0 #000; text-align: center; }
+    .nav a:hover { transform: translate(-2px,-2px); box-shadow: 8px 8px 0 #000; }
+    .nav a.active { background: #ffca28; }
+    .content { flex: 1; padding: 20px; }
+    .h1 { font-family:'Bangers', cursive; font-size: 42px; margin-top:0; }
+    form { margin-top: 20px; background:#fff; border:4px solid #000; border-radius: 12px; padding: 20px; box-shadow: 6px 6px 0 #000; max-width: 700px; }
+    input, select, textarea { width: 100%; padding: 10px; border:3px solid #000; border-radius: 8px; margin-bottom: 12px; font-family:'Comic Neue', cursive; font-size: 16px; }
+    textarea { min-height: 200px; resize: vertical; }
+    button { background: #4caf50; color:#fff; font-weight:bold; border:3px solid #000; border-radius:8px; padding: 10px 14px; cursor:pointer; box-shadow:4px 4px 0 #000; margin-right: 10px; }
+    button:hover { transform: translate(-2px,-2px); box-shadow:8px 8px 0 #000; }
+    #repliesList div { background: #fff; border:3px solid #000; border-radius: 8px; padding: 12px; margin-bottom: 12px; box-shadow: 4px 4px 0 #000; }
+  </style>
+</head>
+<body>
+  <div class="app">
+    <aside class="sidebar">
+      <div class="brand">
+        <div class="logo">R</div>
+        <div class="title">Ravenscroft</div>
+      </div>
+      <nav class="nav">
+        <a href="index.html">Home</a>
+        <a href="superpower.html">Design Superpower</a>
+        <a href="kryptonite.html">Design Kryptonite</a>
+      </nav>
+    </aside>
+    <main class="content">
+      <h1 class="h1" id="pageTitle"></h1>
+    </main>
+  </div>
+  <script>
+    const path = location.pathname;
+    const content = document.querySelector('.content');
+    if (path.endsWith('index.html') || path.endsWith('/')) {
+      document.getElementById('pageTitle').innerText = 'Ravenscroft Design Process Reflection';
+      const intro = document.createElement('div');
+      intro.innerHTML = '<p>Here’s the Ravenscroft Design Process — use it as a guide for your Superpower and Kryptonite reflections.</p><img src="process.png" style="max-width:100%;height:auto;border:4px solid #000;border-radius:12px;">';
+      content.appendChild(intro);
+    } else {
+      if (path.endsWith('superpower.html')) {
+        document.getElementById('pageTitle').innerText = 'Design Superpower';
+        initReplies('superpowerReplies');
+      }
+      if (path.endsWith('kryptonite.html')) {
+        document.getElementById('pageTitle').innerText = 'Design Kryptonite';
+        initReplies('kryptoniteReplies');
+      }
+    }
+    function initReplies(key) {
+      const form = document.createElement('form');
+      form.innerHTML = `
+        <label>Name (optional)<input type="text" name="name"></label>
+        <label>Design process (optional)
+          <select name="process">
+            <option value="">— Select one —</option>
+            <option>Empathize</option><option>Define</option><option>Ideate</option>
+            <option>Prototype</option><option>Test</option><option>Research</option>
+            <option>Iteration</option><option>Other</option>
+          </select>
+        </label>
+        <label>Your reply<textarea name="text" maxlength="500" required></textarea></label>
+        <button type="submit">Submit</button>
+        <button type="button" id="clearBtn" style="background:#f44336;">Clear All</button>
+      `;
+      const listContainer = document.createElement('div');
+      listContainer.id = 'repliesList';
+      form.addEventListener('submit', e => {
+        e.preventDefault();
+        const replies = JSON.parse(localStorage.getItem(key) || '[]');
+        const name = form.name.value.trim();
+        const process = form.process.value.trim();
+        const text = form.text.value.trim();
+        if (!text) return;
+        replies.push({ name, process, text });
+        localStorage.setItem(key, JSON.stringify(replies));
+        form.reset();
+        renderReplies(replies);
+      });
+      form.querySelector('#clearBtn').addEventListener('click', () => {
+        localStorage.removeItem(key);
+        renderReplies([]);
+      });
+      function renderReplies(replies) {
+        listContainer.innerHTML = '';
+        replies.forEach(r => {
+          const card = document.createElement('div');
+          card.innerHTML = `<strong>${r.name || 'Anonymous'}</strong> (${r.process || 'No process'})<br>${r.text}`;
+          listContainer.appendChild(card);
+        });
+      }
+      renderReplies(JSON.parse(localStorage.getItem(key) || '[]'));
+      content.appendChild(form);
+      content.appendChild(listContainer);
+    }
+  </script>
+</body>
+</html>
